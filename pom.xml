@@ -45,6 +45,7 @@
     <module>service-discovery</module>
     <module>api-gateway</module>
     <module>test-service</module>
+    <module>auth-service</module>
   </modules>
 
   <dependencyManagement>
