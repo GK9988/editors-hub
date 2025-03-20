@@ -1,6 +1,7 @@
 package org.garvk.authservice.controller;
 
 import org.garvk.authservice.model.User;
+import org.garvk.authservice.model.UserDto;
 import org.garvk.authservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,10 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User aInUser){
-        User aOutUser = authService.registerUser(aInUser);
+    public ResponseEntity<UserDto> registerUser(@RequestBody User aInUser){
+        User lUser = authService.registerUser(aInUser);
+
+        UserDto aOutUser = new UserDto(lUser);
 
         return new ResponseEntity<>(aOutUser, HttpStatus.CREATED);
     }

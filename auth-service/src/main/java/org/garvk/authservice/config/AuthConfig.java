@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(20);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
