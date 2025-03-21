@@ -29,6 +29,17 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    public String generateToken(String aInUsername){
+        return jwtUtils.generateToken(aInUsername);
+    }
+
+    public boolean validateToken(String aInToken, User aInUser){
+        return jwtUtils.validateToken(aInToken, aInUser);
+    }
+
     @Transactional
     public User registerUser(User aInUser){
 
