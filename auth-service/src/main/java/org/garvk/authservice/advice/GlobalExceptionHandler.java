@@ -2,20 +2,19 @@ package org.garvk.authservice.advice;
 
 import org.antlr.v4.runtime.Token;
 import org.apache.coyote.Response;
-import org.garvk.authservice.exception.AuthServiceException;
-import org.garvk.authservice.exception.EmailAlreadyExistsException;
-import org.garvk.authservice.exception.TokenValidationException;
-import org.garvk.authservice.exception.UserNotFoundException;
+import org.garvk.authservice.exception.*;
 import org.garvk.authservice.model.ErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+import java.io.InvalidClassException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -43,6 +42,11 @@ public class GlobalExceptionHandler {
                 req
         );
 
+    }
+
+    @ExceptionHandler({InvalidCredentialsException.class})
+    public ResponseEntity<ErrorResponseDto> handleInvalidCreds(Exception ex, WebRequest req){
+        return createErrorResponse(ex, HttpStatus.UNAUTHORIZED, req);
     }
 
     /**

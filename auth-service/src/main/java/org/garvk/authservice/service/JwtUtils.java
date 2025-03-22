@@ -79,7 +79,7 @@ public class JwtUtils {
         return extractExpiration(aInToken).before(new Date());
     }
 
-    public boolean validateToken(String aInToken, String aInUserName){
+    public boolean validateToken(String aInToken){
 
         try{
             Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(aInToken);
@@ -87,11 +87,7 @@ public class JwtUtils {
             throw new TokenValidationException(e.getMessage());
         }
 
-        String lUserName = extractUsername(aInToken);
-
-        boolean userNameCheck = lUserName.equals(aInUserName);
-
-        return userNameCheck && !isTokenExpired(aInToken);
+        return !isTokenExpired(aInToken);
     }
 
 }

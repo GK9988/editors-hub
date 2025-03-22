@@ -36,8 +36,13 @@ public class AuthService {
         return jwtUtils.generateToken(aInUsername);
     }
 
-    public boolean validateToken(String aInToken, String aInUserName){
-        return jwtUtils.validateToken(aInToken, aInUserName);
+    public boolean validateToken(String aInToken){
+
+        if(null != aInToken && aInToken.startsWith("Bearer")){
+            aInToken = aInToken.substring(7);
+        }
+
+        return jwtUtils.validateToken(aInToken);
     }
 
     @Transactional
