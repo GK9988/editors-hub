@@ -1,8 +1,10 @@
 package org.garvk.authservice.advice;
 
+import org.antlr.v4.runtime.Token;
 import org.apache.coyote.Response;
 import org.garvk.authservice.exception.AuthServiceException;
 import org.garvk.authservice.exception.EmailAlreadyExistsException;
+import org.garvk.authservice.exception.TokenValidationException;
 import org.garvk.authservice.exception.UserNotFoundException;
 import org.garvk.authservice.model.ErrorResponseDto;
 import org.slf4j.Logger;
@@ -41,6 +43,17 @@ public class GlobalExceptionHandler {
                 req
         );
 
+    }
+
+    /**
+     * Token Validation Failed
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(TokenValidationException.class)
+    public ResponseEntity<ErrorResponseDto> handleTokenValidationException(TokenValidationException ex, WebRequest req){
+        return createErrorResponse(ex, HttpStatus.UNAUTHORIZED, req);
     }
 
 

@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.garvk.authservice.exception.AuthServiceException;
+import org.garvk.authservice.exception.TokenValidationException;
 import org.garvk.authservice.model.User;
 import org.springframework.stereotype.Service;
 
@@ -78,11 +79,17 @@ public class JwtUtils {
         return extractExpiration(aInToken).before(new Date());
     }
 
-    public boolean validateToken(String aInToken, User aInUser){
-        Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(aInToken);
+    public boolean validateToken(String aInToken, String aInUserName){
+
+        try{
+            Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(aInToken);
+        } catch (Exception e){
+            throw new TokenValidationException(e.getMessage());
+        }
+
         String lUserName = extractUsername(aInToken);
 
-        boolean userNameCheck = lUserName.equals(aInUser.getUsername());
+        boolean userNameCheck = lUserName.equals(aInUserName);
 
         return userNameCheck && !isTokenExpired(aInToken);
     }

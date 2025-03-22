@@ -36,8 +36,8 @@ public class AuthService {
         return jwtUtils.generateToken(aInUsername);
     }
 
-    public boolean validateToken(String aInToken, User aInUser){
-        return jwtUtils.validateToken(aInToken, aInUser);
+    public boolean validateToken(String aInToken, String aInUserName){
+        return jwtUtils.validateToken(aInToken, aInUserName);
     }
 
     @Transactional
