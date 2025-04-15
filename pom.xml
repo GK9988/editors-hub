@@ -46,6 +46,7 @@
     <module>api-gateway</module>
     <module>test-service</module>
     <module>auth-service</module>
+    <module>project-service</module>
   </modules>
 
   <dependencyManagement>
